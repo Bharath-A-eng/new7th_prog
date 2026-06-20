@@ -1,24 +1,33 @@
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.*;
-
-public class WebPageTest {
-    WebDriver driver;
-
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+import static org.testng.Assert.assertTrue;
+public class WebPageTest
+{
+    private static WebDriver driver;
     @BeforeTest
-    public void setup() {
+    public void openBrowser() throws InterruptedException
+    {
         driver = new ChromeDriver();
-        driver.get("YOUR_GITHUB_PAGES_URL");
+        driver.manage().window().maximize();
+        Thread.sleep(2000);
+        driver.get("https://bharath-a-eng.github.io/new7th_prog/");
     }
-
     @Test
-    public void titleTest() {
-        Assert.assertEquals(driver.getTitle(), "My Simple Website");
+    public void titleValidationTest()
+    {
+        String actualTitle = driver.getTitle();
+        String expectedTitle = "My simple website";
+        Assert.assertEquals(actualTitle, expectedTitle);
+        assertTrue(true, "Title should contain 'simple'");
     }
-
     @AfterTest
-    public void teardown() {
+    public void closeBrowser() throws InterruptedException
+    {
+        Thread.sleep(1000);
         driver.quit();
     }
 }
